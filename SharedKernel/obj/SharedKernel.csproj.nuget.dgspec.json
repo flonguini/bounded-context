@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\flong\\Desktop\\foo\\Materiais\\Materiais.csproj": {}
+    "C:\\Users\\flong\\Desktop\\foo\\SharedKernel\\SharedKernel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\flong\\Desktop\\foo\\Materiais\\Materiais.csproj": {
+    "C:\\Users\\flong\\Desktop\\foo\\SharedKernel\\SharedKernel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\flong\\Desktop\\foo\\Materiais\\Materiais.csproj",
-        "projectName": "Materiais",
-        "projectPath": "C:\\Users\\flong\\Desktop\\foo\\Materiais\\Materiais.csproj",
+        "projectUniqueName": "C:\\Users\\flong\\Desktop\\foo\\SharedKernel\\SharedKernel.csproj",
+        "projectName": "SharedKernel",
+        "projectPath": "C:\\Users\\flong\\Desktop\\foo\\SharedKernel\\SharedKernel.csproj",
         "packagesPath": "C:\\Users\\flong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\flong\\Desktop\\foo\\Materiais\\obj\\",
+        "outputPath": "C:\\Users\\flong\\Desktop\\foo\\SharedKernel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\flong\\AppData\\Roaming\\NuGet\\NuGet.Config",

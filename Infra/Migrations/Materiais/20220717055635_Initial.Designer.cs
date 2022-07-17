@@ -3,16 +3,18 @@ using Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infra.Migrations
+namespace Infra.Migrations.Materiais
 {
-    [DbContext(typeof(AgenciaContext))]
-    partial class AgenciaContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MateriaisContext))]
+    [Migration("20220717055635_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,22 @@ namespace Infra.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Agencias.Agencia", b =>
+            modelBuilder.Entity("Materiais.Agencia", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToView("agencias");
+                });
+
+            modelBuilder.Entity("Materiais.Material", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,22 +46,23 @@ namespace Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Endereco")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Numero")
+                    b.Property<int>("SegmentoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("agencias", (string)null);
+                    b.HasIndex("SegmentoId");
+
+                    b.ToTable("Materiais");
                 });
 
-            modelBuilder.Entity("Agencias.Segmento", b =>
+            modelBuilder.Entity("Materiais.Segmento", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
@@ -55,37 +73,23 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Segmentos");
+                    b.ToView("Segmentos");
                 });
 
-            modelBuilder.Entity("AgenciaSegmento", b =>
+            modelBuilder.Entity("Materiais.Material", b =>
                 {
-                    b.Property<int>("AgenciasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SegmentosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AgenciasId", "SegmentosId");
-
-                    b.HasIndex("SegmentosId");
-
-                    b.ToTable("AgenciaSegmento");
-                });
-
-            modelBuilder.Entity("AgenciaSegmento", b =>
-                {
-                    b.HasOne("Agencias.Agencia", null)
-                        .WithMany()
-                        .HasForeignKey("AgenciasId")
+                    b.HasOne("Materiais.Segmento", "Segmento")
+                        .WithMany("Materiais")
+                        .HasForeignKey("SegmentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Agencias.Segmento", null)
-                        .WithMany()
-                        .HasForeignKey("SegmentosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Segmento");
+                });
+
+            modelBuilder.Entity("Materiais.Segmento", b =>
+                {
+                    b.Navigation("Materiais");
                 });
 #pragma warning restore 612, 618
         }

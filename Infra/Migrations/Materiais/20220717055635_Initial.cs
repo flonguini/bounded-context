@@ -14,12 +14,18 @@ namespace Infra.Migrations.Materiais
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SegmentoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Materiais", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Materiais_SegmentoId",
+                table: "Materiais",
+                column: "SegmentoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

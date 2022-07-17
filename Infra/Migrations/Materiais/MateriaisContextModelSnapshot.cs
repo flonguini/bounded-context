@@ -21,7 +21,7 @@ namespace Infra.Migrations.Materiais
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Faturamentos.Agencia", b =>
+            modelBuilder.Entity("Materiais.Agencia", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -48,9 +48,46 @@ namespace Infra.Migrations.Materiais
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SegmentoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("SegmentoId");
+
                     b.ToTable("Materiais");
+                });
+
+            modelBuilder.Entity("Materiais.Segmento", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("Segmentos");
+                });
+
+            modelBuilder.Entity("Materiais.Material", b =>
+                {
+                    b.HasOne("Materiais.Segmento", "Segmento")
+                        .WithMany("Materiais")
+                        .HasForeignKey("SegmentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Segmento");
+                });
+
+            modelBuilder.Entity("Materiais.Segmento", b =>
+                {
+                    b.Navigation("Materiais");
                 });
 #pragma warning restore 612, 618
         }

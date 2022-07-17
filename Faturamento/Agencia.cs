@@ -13,4 +13,5 @@ public class Faturamento
     public int Total { get; set; }
 
     public int AgenciaId { get; set; }
+    public Agencia Agencia { get; set; }
 }

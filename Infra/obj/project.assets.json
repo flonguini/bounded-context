@@ -638,6 +638,9 @@
       "Agencia/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "SharedKernel": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Agencia.dll": {}
         },
@@ -663,6 +666,16 @@
         },
         "runtime": {
           "bin/placeholder/Materiais.dll": {}
+        }
+      },
+      "SharedKernel/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SharedKernel.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedKernel.dll": {}
         }
       }
     }
@@ -1899,6 +1912,11 @@
       "type": "project",
       "path": "../Materiais/Materiais.csproj",
       "msbuildProject": "../Materiais/Materiais.csproj"
+    },
+    "SharedKernel/1.0.0": {
+      "type": "project",
+      "path": "../SharedKernel/SharedKernel.csproj",
+      "msbuildProject": "../SharedKernel/SharedKernel.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1997,7 +2015,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

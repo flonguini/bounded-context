@@ -1,59 +1,69 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Contexts
+namespace Infra.Contexts;
+
+public class AgenciaContext : DbContext
 {
-    public class AgenciaContext : DbContext
+    public DbSet<Agencias.Agencia> Agencias { get; set; }
+    public DbSet<Agencias.Segmento> Segmentos { get; set; }
+
+    public AgenciaContext(DbContextOptions<AgenciaContext> options): base(options)
     {
-        public DbSet<Agencias.Agencia> Agencias { get; set; }
 
-        public AgenciaContext(DbContextOptions<AgenciaContext> options): base(options)
-        {
-
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Agencias.Agencia>()
-                .ToTable("agencias");
-        }
     }
 
-    public class MateriaisContext : DbContext
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public IQueryable<Materiais.Agencia> Agencias { get; set; }
-        public DbSet<Materiais.Material> Materiais { get; set; }
+        modelBuilder.Entity<Agencias.Agencia>()
+            .ToTable("agencias");
+    }
+}
 
-        public MateriaisContext(DbContextOptions<MateriaisContext> options) : base(options)
-        {
+public class MateriaisContext : DbContext
+{
+    public IQueryable<Materiais.Agencia> Agencias { get; set; }
+    public IQueryable<Materiais.Segmento> Segmentos { get; set; }
+    public DbSet<Materiais.Material> Materiais { get; set; }
 
-        }
+    public MateriaisContext(DbContextOptions<MateriaisContext> options) : base(options)
+    {
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Materiais.Agencia>(options =>
-            {
-                options.ToView("agencias");
-            });
-                
-        }
     }
 
-    public class FaturamentoContext : DbContext
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public DbSet<Faturamentos.Agencia> Agencias { get; set; }
-        public DbSet<Faturamentos.Faturamento> Faturamento { get; set; }
-
-        public FaturamentoContext(DbContextOptions<FaturamentoContext> options) : base(options)
+        modelBuilder.Entity<Materiais.Agencia>(options =>
         {
+            options.ToView("agencias");
+        });
 
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        modelBuilder.Entity<Materiais.Segmento>(options =>
         {
-            modelBuilder.Entity<Faturamentos.Agencia>(options =>
-            {
-                options.ToView("agencias");
-            });
-        }
+            options.ToView("Segmentos");
+        });
+
+        modelBuilder.Entity<Materiais.Material>()
+            .HasOne(x => x.Segmento)
+            .WithMany(x => x.Materiais)
+            .HasForeignKey(x => x.SegmentoId);
+    }
+}
+
+public class FaturamentoContext : DbContext
+{
+    public IQueryable<Faturamentos.Agencia> Agencias { get; set; }
+    public DbSet<Faturamentos.Faturamento> Faturamento { get; set; }
+
+    public FaturamentoContext(DbContextOptions<FaturamentoContext> options) : base(options)
+    {
+
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Faturamentos.Agencia>(options =>
+        {
+            options.ToView("agencias");
+        });
     }
 }
